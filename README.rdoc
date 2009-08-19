@@ -50,6 +50,6 @@ Or even post a photo to an existing album:
 	image_data = open(fileName, "rb").read
 	photo = picasa.post_photo(image_data, :album => "AlbumFromRuby", 
 	  :summary => "Upload2 from ruby api", :title => "From Ruby 2",
-	  :local_file_name => "Blue hills.jpg")
+	  :local_file_name => "blue_hills.jpg")
 
 For any further questions of issues, please see {google code picasaonrails}[http://code.google.com/p/picasaonrails/]
