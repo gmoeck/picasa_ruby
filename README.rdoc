@@ -1,0 +1,55 @@
+= Picasa_Ruby
+
+Picasa_Ruby is a Picasa API for ruby. It is a mirror of picasaonrails from googlecode.
+
+Some code examples will likely be helpful...
+
+The login session is simple:
+
+	require "picasa"
+
+	picasa = Picasa::Picasa.new
+	picasa.login("username", "password")
+
+Once the session object is obtained, you can use it to collect, and use your Picasa albums. For example, you might print the albums and the photos to the command line as follows:
+	albums = picasa.albums(:access => "private")
+	albums.each do |album|
+	  puts "===== Album ======"
+	  puts album.id
+	  puts album.name
+
+	  puts album.thumbnail.url
+	  puts album.thumbnail.width
+	  puts album.thumbnail.height
+
+	  photos = album.photos
+	  if(photos.size > 0)
+	    photos.each do |photo|
+	      puts "====== Photo ====="
+	      puts photo.id
+	      puts photo.title
+	      puts photo.url
+	      photo.thumbnails.each do |thumbnail|
+	        puts thumbnail.url
+	        puts thumbnail.width
+	        puts thumbnail.height
+	      end
+	    end
+	  else
+	    puts "====== No photo for this album ====="
+	  end
+	end
+
+You can also create an album as follows:
+	album = picasa.create_album(:title => "Album From Ruby", 
+	  :summary => "This album is created from ruby code",
+	  :location => "Bangladesh", :keywords => "keyword1, keyword2")
+
+Or even post a photo to an existing album:
+	fileName = "~/Photos/blue_hills.jpg"
+	image_data = open(fileName, "rb").read
+	photo = picasa.post_photo(image_data, :album => "AlbumFromRuby", 
+	  :summary => "Upload2 from ruby api", :title => "From Ruby 2",
+	  :local_file_name => "Blue hills.jpg")
+
+For any further questions of issues, please see {google code picasaonrails}[http://code.google.com/p/picasaonrails/]
